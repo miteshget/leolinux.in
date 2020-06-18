@@ -23,5 +23,6 @@ NOTE
 Sorry for typos, Corrections to the content of the blog is on priority. You can email my mistakes/amendment/suggestion on miteshget@gmail.com .
 
 
-Thank you 
+Thank you,
+
 LEOxian
