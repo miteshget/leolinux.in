@@ -1,8 +1,8 @@
 #!/usr/local/bin/python3
 # Author : LEOxian 
 # License: GPLv2
-# Description: Tic Tac Toe Game
-# Date : 23-March-2013
+# Description: Python base Tic Tac Toe game
+# Date : 20-Oct-2022
 
 
 from asyncio import run_coroutine_threadsafe
@@ -10,6 +10,7 @@ import os
 import re
 from time import sleep
 
+# Colour codes
 code_normal = "\33[0m"
 code_red = "\33[31m"
 code_green = "\33[32m"
@@ -18,7 +19,10 @@ code_blue = "\33[34m"
 code_pink = "\33[35m"
 code_megenta= "\33[36m"
 
+# board array
 cell=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+# Default player's setting
 default_players = [
     {
         "id": 0,
@@ -29,6 +33,8 @@ default_players = [
         "name": code_megenta + "Player-2" + code_normal,
         "symbol": "O"}
     ]
+
+# Output messages
 board_input_msg = code_yellow + "Enter the one number as appeared in the board" + code_normal
 run_count = 0 
 error_msg = ""
@@ -46,6 +52,7 @@ ____________________________________________________
 exit_msg = code_yellow + "\nThanks you for playing Tic Tac Toe Game\nSee you soon!\n\n\t-Mitesh The Mouse\n" + code_normal
 download_link = code_pink + "Python game download link--> \n\thttps://github.com/miteshget/leolinux.in/blob/master/games/python/tictactoe.py\n" + code_normal
 
+# Board display function
 def board():
     os.system("clear")
     print("\n")
@@ -72,6 +79,7 @@ def board():
         if i < 6:
             print("\t___________")
 
+# Algorithms 
 def winning_algorithm(id):
     for i in range(1,9,3):
         if cell[i] == default_players[id]["symbol"] and cell[i+1] == default_players[id]["symbol"] and  cell[i+2] == default_players[id]["symbol"]:
@@ -104,7 +112,8 @@ def draw_algorithm():
         print("\n" + code_red + "Game Over! No one won." + code_normal)
         print(exit_msg)
         quit(download_link)
-    
+        
+# Player's name input function
 def update_default_players():
     print("Enter player's name - ")
     print("_____________________")
@@ -115,7 +124,8 @@ def update_default_players():
                 default_players[pid]["name"] = code_pink + pname + code_normal
             elif pid == 1:
                 default_players[pid]["name"] = code_megenta + pname + code_normal
-                   
+
+# Players input validation function               
 def validate_board_input(cellno):
     global error_msg
     if len(cellno) == 0:
@@ -136,7 +146,8 @@ def validate_board_input(cellno):
         return False
     error_msg = ""
     return True
-    
+
+# Update board array function 
 def update_board(id):
     global run_count
     run_count += 1
@@ -153,9 +164,10 @@ def update_board(id):
     else:
       update_board(id)
 
+# Main program
 def main():
-    # board()
-    os.system("clear")
+    board()
+    # os.system("clear")
     print(welcome_msg)
     update_default_players()
     while True:
@@ -163,7 +175,7 @@ def main():
             board()
             update_board(i)
 
-
+# exception handler 
 if __name__ == '__main__':
     try:
         main()
