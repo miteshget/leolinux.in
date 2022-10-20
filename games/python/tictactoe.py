@@ -44,6 +44,7 @@ ____________________________________________________
 ''' + code_normal
 
 exit_msg = code_yellow + "\nThanks you for playing Tic Tac Toe Game\nSee you soon!\n\n\t-Mitesh The Mouse\n" + code_normal
+download_link = code_pink + "Python game download link--> \n\thttps://github.com/miteshget/leolinux.in/blob/master/Script_Demos/python/tictactoe.py\n" + code_normal
 
 def board():
     os.system("clear")
@@ -105,8 +106,11 @@ def update_default_players():
     for pid in range(0,2):
         pname = input("\t" + default_players[pid]["name"] + " enter name: ")
         if len(pname) != 0:
-            default_players[pid]["name"] = pname         
-
+            if pid == 0:
+                default_players[pid]["name"] = code_pink + pname + code_normal
+            elif pid == 1:
+                default_players[pid]["name"] = code_megenta + pname + code_normal
+                   
 def validate_board_input(cellno):
     global error_msg
     if len(cellno) == 0:
@@ -161,3 +165,4 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         os.system("clear")
         print(exit_msg)
+        print(download_link)
