@@ -44,7 +44,7 @@ ____________________________________________________
 ''' + code_normal
 
 exit_msg = code_yellow + "\nThanks you for playing Tic Tac Toe Game\nSee you soon!\n\n\t-Mitesh The Mouse\n" + code_normal
-download_link = code_pink + "Python game download link--> \n\thttps://github.com/miteshget/leolinux.in/blob/master/Script_Demos/python/tictactoe.py\n" + code_normal
+download_link = code_pink + "Python game download link--> \n\thttps://github.com/miteshget/leolinux.in/blob/master/games/python/tictactoe.py\n" + code_normal
 
 def board():
     os.system("clear")
@@ -78,19 +78,23 @@ def winning_algorithm(id):
             board()
             print("\n" + default_players[id]["name"] + win_msg )
             quit(exit_msg)
+            print(download_link)
     for i in range(1,4):
         if cell[i] == default_players[id]["symbol"] and cell[i+3] == default_players[id]["symbol"] and  cell[i+6] == default_players[id]["symbol"]:
             board()
             print("\n" + default_players[id]["name"] + win_msg )
             quit(exit_msg)
+            print(download_link)
     if cell[1] == default_players[id]["symbol"] and cell[5] == default_players[id]["symbol"] and  cell[9] == default_players[id]["symbol"]:
         board()
         print("\n" + default_players[id]["name"] + win_msg )
         quit(exit_msg)
+        print(download_link)
     if cell[3] == default_players[id]["symbol"] and cell[5] == default_players[id]["symbol"] and  cell[7] == default_players[id]["symbol"]:
         board()
         print("\n" + default_players[id]["name"] + win_msg )
         quit(exit_msg)
+        print(download_link)
         
 def draw_algorithm():
     check_numbers = re.compile('[123456789]')
@@ -99,6 +103,7 @@ def draw_algorithm():
         board()
         print("\n" + code_red + "Game Over! No one won." + code_normal)
         quit(exit_msg)
+        print(download_link)
     
 def update_default_players():
     print("Enter player's name - ")
