@@ -158,7 +158,7 @@ def update_board(id):
     if run_count > 3:
         exit(attempt_exceeded_msg)
     print("\n" + error_msg)
-    cellno = input("[ " + board_input_msg + " ]\n" + "|-> " +  default_players[id]["name"] + " [Attempt-" + str(run_count) + "]" + input_prompt)
+    cellno = input("[" + board_input_msg + "]\n" + "|-> " +  default_players[id]["name"] + " [Attempt-" + str(run_count) + "]" + input_prompt)
     if bool(validate_board_input(cellno)):
         cell[int(cellno)] = default_players[id]["symbol"]
         run_count = 0
