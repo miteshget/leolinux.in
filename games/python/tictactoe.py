@@ -34,11 +34,20 @@ default_players = [
     ]
 
 # Output messages
-board_input_msg = code_yellow + "Enter the one number as appeared in the board" + code_normal
-run_count = 0 
-error_msg = ""
-win_msg = code_green + " Congratulation!, You won the game\n" + code_normal
-welcome_msg =  code_yellow + '''
+board_input_msg     = code_yellow + "Enter the one number as appeared in the board" + code_normal
+run_count           = 0 
+error_msg           = ""
+null_error_msg      = code_red + "Error: null input" + code_normal 
+digit_error_msg     = code_red + "Error: single digit is allowed" + code_normal 
+alpha_error_msg     = code_red + "Error: alphabet is not allowed" + code_normal 
+numeric_error_msg   = code_red + "Error: only numbers are allowed" + code_normal 
+occupied_error_msg  = code_red + "Error: already used" + code_normal 
+win_msg             = code_green + " Congratulation!, You won the game\n" + code_normal
+attempt_exceeded_msg = code_red + "\nNo of attempts exceeded\n" + code_normal
+input_prompt        = " [Type and Press Enter] >> " 
+exit_msg            = code_yellow + "\nThanks you for playing Tic Tac Toe Game\nSee you soon!\n\n\t-Mitesh The Mouse\n" + code_normal
+download_link       = code_pink + "Python game download link--> \n\thttps://github.com/miteshget/leolinux.in/blob/master/games/python/tictactoe.py\n" + code_normal
+welcome_msg         =  code_yellow + '''
 ____________________________________________________
 |                                                   |
  |      Welcome to Tic Tac Toe Game\t\t     |
@@ -48,8 +57,6 @@ ____________________________________________________
      ----------------------------------------------------
 ''' + code_normal
 
-exit_msg = code_yellow + "\nThanks you for playing Tic Tac Toe Game\nSee you soon!\n\n\t-Mitesh The Mouse\n" + code_normal
-download_link = code_pink + "Python game download link--> \n\thttps://github.com/miteshget/leolinux.in/blob/master/games/python/tictactoe.py\n" + code_normal
 
 # Board display function
 def board():
@@ -128,20 +135,20 @@ def update_default_players():
 def validate_board_input(cellno):
     global error_msg
     if len(cellno) == 0:
-        error_msg = "\33[91mError: Null is invalid \33[0m" 
+        error_msg = null_error_msg
         return False
     if len(cellno) > 2:
-        error_msg = "\33[91mError: Invalid input \33[0m" 
+        error_msg = digit_error_msg
         return False
     if cellno.isalpha():
-        error_msg = "\33[91mError: Alpha is not allowed \33[0m"
+        error_msg = alpha_error_msg
         return False
     check_numbers = re.compile('[123456789]')
     if check_numbers.search(cellno) == None:
-        error_msg = "\33[91mError: Characters are not allowed \33[0m"
+        error_msg = numeric_error_msg
         return False
     if cellno not in cell:
-        error_msg = "\33[91mError: Wrong number provided \33[0m"
+        error_msg = occupied_error_msg
         return False
     error_msg = ""
     return True
@@ -151,9 +158,9 @@ def update_board(id):
     global run_count
     run_count += 1
     if run_count > 3:
-        exit("\n\33[91mNo of attempts exceeded\33[0m\n")
+        exit(attempt_exceeded_msg)
     print("\n" + error_msg)
-    cellno = input("[ " + board_input_msg + " ]\n" + "|-> " + "\33[36m" + default_players[id]["name"] +" \33[0m" + " [Type and Press Enter] >> ")
+    cellno = input("[ " + board_input_msg + " ]\n" + "|-> " +  default_players[id]["name"] + input_prompt)
     if bool(validate_board_input(cellno)):
         cell[int(cellno)] = default_players[id]["symbol"]
         run_count = 0
@@ -166,7 +173,6 @@ def update_board(id):
 # Main program
 def main():
     board()
-    # os.system("clear")
     print(welcome_msg)
     update_default_players()
     while True:
