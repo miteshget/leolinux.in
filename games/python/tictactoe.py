@@ -17,21 +17,6 @@ code_blue = "\33[34m"
 code_pink = "\33[35m"
 code_megenta= "\33[36m"
 
-# board array
-cell=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-
-# Default player's setting
-default_players = [
-    {
-        "id": 0,
-        "name": code_pink + "Player-1" + code_normal,
-        "symbol": "X" },
-    {
-        "id": 1,
-        "name": code_megenta + "Player-2" + code_normal,
-        "symbol": "O"}
-    ]
-
 # Output messages
 board_input_msg     = code_yellow + "Enter the one number as appeared in the board" + code_normal
 run_count           = 0 
@@ -45,7 +30,7 @@ win_msg             = code_green + " Congratulation!, You won the game\n" + code
 attempt_exceeded_msg = code_red + "\nNo of attempts exceeded\n" + code_normal
 input_prompt        = " [Type and Press Enter] >> " 
 exit_msg            = code_yellow + "\nThanks you for playing Tic Tac Toe Game\nSee you soon!\n\n\t-Mitesh The Mouse\n" + code_normal
-download_link       = code_pink + "Python game download link--> \n\thttps://github.com/miteshget/leolinux.in/blob/master/games/python/tictactoe.py\n" + code_normal
+download_link       = code_pink + "Python game download link-->\n\thttps://github.com/miteshget/leolinux.in/blob/master/games/python/tictactoe.py\n" + code_normal
 welcome_msg         =  code_yellow + '''
 ____________________________________________________
 |                                                   |
@@ -56,6 +41,8 @@ ____________________________________________________
      ----------------------------------------------------
 ''' + code_normal
 
+# board array
+cell=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
 # Board display function
 def board():
@@ -84,7 +71,7 @@ def board():
         if i < 6:
             print("\t___________")
 
-# Algorithms 
+# Algorithms (winner)
 def winning_algorithm(id):
     for i in range(1,9,3):
         if cell[i] == default_players[id]["symbol"] and cell[i+1] == default_players[id]["symbol"] and  cell[i+2] == default_players[id]["symbol"]:
@@ -108,7 +95,8 @@ def winning_algorithm(id):
         print("\n" + default_players[id]["name"] + win_msg )
         print(exit_msg)
         quit(download_link)
-        
+
+# Algorithms (draw)      
 def draw_algorithm():
     check_numbers = re.compile('[123456789]')
     if check_numbers.search(''.join(cell)) == None:
@@ -116,7 +104,19 @@ def draw_algorithm():
         print("\n" + code_red + "Game Over! No one won." + code_normal)
         print(exit_msg)
         quit(download_link)
-        
+
+# Default player's setting
+default_players = [
+    {
+        "id": 0,
+        "name": code_pink + "Player-1" + code_normal,
+        "symbol": "X" },
+    {
+        "id": 1,
+        "name": code_megenta + "Player-2" + code_normal,
+        "symbol": "O"}
+    ]
+
 # Player's name input function
 def update_default_players():
     print("Enter player's name - ")
@@ -158,7 +158,7 @@ def update_board(id):
     if run_count > 3:
         exit(attempt_exceeded_msg)
     print("\n" + error_msg)
-    cellno = input("[ " + board_input_msg + " ]\n" + "|-> " +  default_players[id]["name"] + input_prompt)
+    cellno = input("[ " + board_input_msg + " ]\n" + "|-> " +  default_players[id]["name"] + " [ Attempt-" + str(run_count) + "]" + input_prompt)
     if bool(validate_board_input(cellno)):
         cell[int(cellno)] = default_players[id]["symbol"]
         run_count = 0
