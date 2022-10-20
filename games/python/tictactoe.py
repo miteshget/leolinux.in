@@ -77,24 +77,24 @@ def winning_algorithm(id):
         if cell[i] == default_players[id]["symbol"] and cell[i+1] == default_players[id]["symbol"] and  cell[i+2] == default_players[id]["symbol"]:
             board()
             print("\n" + default_players[id]["name"] + win_msg )
-            quit(exit_msg)
-            print(download_link)
+            print(exit_msg)
+            quit(download_link)
     for i in range(1,4):
         if cell[i] == default_players[id]["symbol"] and cell[i+3] == default_players[id]["symbol"] and  cell[i+6] == default_players[id]["symbol"]:
             board()
             print("\n" + default_players[id]["name"] + win_msg )
-            quit(exit_msg)
-            print(download_link)
+            print(exit_msg)
+            quit(download_link)
     if cell[1] == default_players[id]["symbol"] and cell[5] == default_players[id]["symbol"] and  cell[9] == default_players[id]["symbol"]:
         board()
         print("\n" + default_players[id]["name"] + win_msg )
-        quit(exit_msg)
-        print(download_link)
+        print(exit_msg)
+        quit(download_link)
     if cell[3] == default_players[id]["symbol"] and cell[5] == default_players[id]["symbol"] and  cell[7] == default_players[id]["symbol"]:
         board()
         print("\n" + default_players[id]["name"] + win_msg )
-        quit(exit_msg)
-        print(download_link)
+        print(exit_msg)
+        quit(download_link)
         
 def draw_algorithm():
     check_numbers = re.compile('[123456789]')
@@ -102,8 +102,8 @@ def draw_algorithm():
     if check_numbers.search(''.join(cell)) == None:
         board()
         print("\n" + code_red + "Game Over! No one won." + code_normal)
-        quit(exit_msg)
-        print(download_link)
+        print(exit_msg)
+        quit(download_link)
     
 def update_default_players():
     print("Enter player's name - ")
