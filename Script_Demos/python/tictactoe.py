@@ -8,30 +8,66 @@
 from asyncio import run_coroutine_threadsafe
 import os
 import re
+from time import sleep
+
+code_normal = "\33[0m"
+code_red = "\33[31m"
+code_green = "\33[32m"
+code_yellow = "\33[33m"
+code_blue = "\33[34m"
+code_pink = "\33[35m"
+code_megenta= "\33[36m"
 
 cell=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-default_players = [{"id": 0, "name": "\33[35mPlayer-1\33[0m", "symbol": "\33[35mX\33[0m"},{"id": 1, "name": "\33[36mPlayer-2\33[0m", "symbol": "\33[36mO\33[0m"}]
-board_input_msg = "\33[33mEnter the one number as appeared in the board\33[0m"
+default_players = [
+    {
+        "id": 0,
+        "name": code_pink + "Player-1" + code_normal,
+        "symbol": "X" },
+    {
+        "id": 1,
+        "name": code_megenta + "Player-2" + code_normal,
+        "symbol": "O"}
+    ]
+board_input_msg = code_yellow + "Enter the one number as appeared in the board" + code_normal
 run_count = 0 
 error_msg = ""
-win_msg = "\33[32m Congratulation!, You won the game\33[0m\n"
-welcome_msg =  '''
-________________________________________________________
-|                                                       |
- |     \33[33mWelcome to Tic Tac Toe Game\33[0m\t\t\t |
-  |    \33[33mThis is two players cli game\33[0m\t\t\t  |
-   |                                                       |
-    |  \33[33mKindly follow the instructions to play\33[0m\t\t    |
-     |                                                       |
-      -------------------------------------------------------
-'''
-exit_msg = "\33[33m\nThanks you for playing Tic Tac Toe Game\nSee you soon!\n\n\t-Mitesh The Mouse\33[0m\n"
+win_msg = code_green + " Congratulation!, You won the game\n" + code_normal
+welcome_msg =  code_yellow + '''
+____________________________________________________
+|                                                   |
+ |      Welcome to Tic Tac Toe Game\t\t     |
+  |     This is two players cli game\t\t      |
+   |    Kindly follow the instructions to play\t       |
+    |                                                   |
+     ----------------------------------------------------
+''' + code_normal
+
+exit_msg = code_yellow + "\nThanks you for playing Tic Tac Toe Game\nSee you soon!\n\n\t-Mitesh The Mouse\n" + code_normal
 
 def board():
     os.system("clear")
     print("\n")
     for i in range(1,9,3):
-        print("\t %s | %s | %s" % (cell[i], cell[i+1], cell[i+2]))
+        if cell[i] == "X":
+            cell1 = code_pink + cell[i] + code_normal
+        elif cell[i] == "O":
+            cell1 = code_megenta + cell[i] + code_normal
+        else:
+            cell1 = cell[i]
+        if cell[i+1] == "X":
+            cell2 = code_pink + cell[i+1] + code_normal
+        elif cell[i+1] == "O":
+            cell2 = code_megenta + cell[i+1] + code_normal
+        else:
+            cell2 = cell[i+1]
+        if cell[i+2] == "X":
+            cell3 = code_pink + cell[i+2] + code_normal
+        elif cell[i+2] == "O":
+            cell3 = code_megenta + cell[i+2] + code_normal
+        else:
+            cell3 = cell[i+2]
+        print("\t %s | %s | %s" % ( cell1, cell2, cell3))
         if i < 6:
             print("\t___________")
 
@@ -56,10 +92,11 @@ def winning_algorithm(id):
         quit(exit_msg)
         
 def draw_algorithm():
-    global cell
     check_numbers = re.compile('[123456789]')
+    print(cell)
     if check_numbers.search(''.join(cell)) == None:
-        print("\n\33[31mGame Over! No one won.\33[0m")
+        board()
+        print("\n" + code_red + "Game Over! No one won." + code_normal)
         quit(exit_msg)
     
 def update_default_players():
@@ -93,7 +130,6 @@ def validate_board_input(cellno):
     
 def update_board(id):
     global run_count
-    global cell
     run_count += 1
     if run_count > 3:
         exit("\n\33[91mNo of attempts exceeded\33[0m\n")
