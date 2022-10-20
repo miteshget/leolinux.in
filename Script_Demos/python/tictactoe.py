@@ -9,11 +9,23 @@ from asyncio import run_coroutine_threadsafe
 import os
 import re
 
-cell=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
-default_players = [{"id": 0, "name": "Player-1", "symbol": "\33[91mX\33[0m"},{"id": 1, "name": "Player-2", "symbol": "\33[92mO\33[0m"}]
-board_input_msg = "Enter the one number as appeared in the board"
+cell=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+default_players = [{"id": 0, "name": "\33[35mPlayer-1\33[0m", "symbol": "\33[35mX\33[0m"},{"id": 1, "name": "\33[36mPlayer-2\33[0m", "symbol": "\33[36mO\33[0m"}]
+board_input_msg = "\33[33mEnter the one number as appeared in the board\33[0m"
 run_count = 0 
 error_msg = ""
+win_msg = "\33[32m Congratulation!, You won the game\33[0m\n"
+welcome_msg =  '''
+________________________________________________________
+|                                                       |
+ |     \33[33mWelcome to Tic Tac Toe Game\33[0m\t\t\t |
+  |    \33[33mThis is two players cli game\33[0m\t\t\t  |
+   |                                                       |
+    |  \33[33mKindly follow the instructions to play\33[0m\t\t    |
+     |                                                       |
+      -------------------------------------------------------
+'''
+exit_msg = "\33[33m\nThanks you for playing Tic Tac Toe Game\nSee you soon!\n\n\t-Mitesh The Mouse\33[0m\n"
 
 def board():
     os.system("clear")
@@ -22,24 +34,34 @@ def board():
         print("\t %s | %s | %s" % (cell[i], cell[i+1], cell[i+2]))
         if i < 6:
             print("\t___________")
-    # print("\n")
 
 def winning_algorithm(id):
     for i in range(1,9,3):
         if cell[i] == default_players[id]["symbol"] and cell[i+1] == default_players[id]["symbol"] and  cell[i+2] == default_players[id]["symbol"]:
             board()
-            quit("\33[32mCongratulation! " + default_players[id]["name"] +", You won the game\33[0m\n" )
+            print("\n" + default_players[id]["name"] + win_msg )
+            quit(exit_msg)
     for i in range(1,4):
         if cell[i] == default_players[id]["symbol"] and cell[i+3] == default_players[id]["symbol"] and  cell[i+6] == default_players[id]["symbol"]:
             board()
-            quit("\33[32mCongratulation! " + default_players[id]["name"] +", You won the game\33[0m\n" )
+            print("\n" + default_players[id]["name"] + win_msg )
+            quit(exit_msg)
     if cell[1] == default_players[id]["symbol"] and cell[5] == default_players[id]["symbol"] and  cell[9] == default_players[id]["symbol"]:
         board()
-        quit("\33[32mCongratulation! " + default_players[id]["name"] +", You won the game\33[0m\n" )
+        print("\n" + default_players[id]["name"] + win_msg )
+        quit(exit_msg)
     if cell[3] == default_players[id]["symbol"] and cell[5] == default_players[id]["symbol"] and  cell[7] == default_players[id]["symbol"]:
         board()
-        quit("\33[32mCongratulation! " + default_players[id]["name"] +", You won the game\33[0m\n" )
+        print("\n" + default_players[id]["name"] + win_msg )
+        quit(exit_msg)
         
+def draw_algorithm():
+    global cell
+    check_numbers = re.compile('[123456789]')
+    if check_numbers.search(''.join(cell)) == None:
+        print("\n\33[31mGame Over! No one won.\33[0m")
+        quit(exit_msg)
+    
 def update_default_players():
     print("Enter player's name - ")
     print("_____________________")
@@ -56,14 +78,14 @@ def validate_board_input(cellno):
     if len(cellno) > 2:
         error_msg = "\33[91mError: Invalid input \33[0m" 
         return False
-    # special_char = re.compile('[@_!$%^&*()<>?/\|}{~:]#`"\'')
-    # if special_char.search(cellno) != None:
-    #     error_msg = "\33[91mError: Special Characters are not allowed\33[0m"
-    #     return False
     if cellno.isalpha():
-        error_msg = "\33[91mError: Alpha is invalid \33[0m"
+        error_msg = "\33[91mError: Alpha is not allowed \33[0m"
         return False
-    if int(cellno) not in cell:
+    check_numbers = re.compile('[123456789]')
+    if check_numbers.search(cellno) == None:
+        error_msg = "\33[91mError: Characters are not allowed \33[0m"
+        return False
+    if cellno not in cell:
         error_msg = "\33[91mError: Wrong number provided \33[0m"
         return False
     error_msg = ""
@@ -71,6 +93,7 @@ def validate_board_input(cellno):
     
 def update_board(id):
     global run_count
+    global cell
     run_count += 1
     if run_count > 3:
         exit("\n\33[91mNo of attempts exceeded\33[0m\n")
@@ -80,6 +103,7 @@ def update_board(id):
         cell[int(cellno)] = default_players[id]["symbol"]
         run_count = 0
         winning_algorithm(id)
+        draw_algorithm()
         return True
     else:
       update_board(id)
@@ -87,9 +111,7 @@ def update_board(id):
 def main():
     # board()
     os.system("clear")
-    print("\33[36m\nWelcome to Tic Tac Toe Game")
-    print("This is two players cli game")
-    print("Kindly follow the instructions to play\33[0m\n")
+    print(welcome_msg)
     update_default_players()
     while True:
         for i in range(2):
@@ -102,4 +124,4 @@ if __name__ == '__main__':
         main()
     except KeyboardInterrupt:
         os.system("clear")
-        print("\33[96m\nThanks you for playing Tic Tac Toe Game\nSee you soon!\n\n\t-Mitesh The Mouse\33[0m\n")
+        print(exit_msg)
