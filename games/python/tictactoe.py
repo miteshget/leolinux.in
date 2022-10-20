@@ -7,7 +7,6 @@
 from asyncio import run_coroutine_threadsafe
 import os
 import re
-from time import sleep
 
 # Colour codes
 code_normal = "\33[0m"
@@ -112,7 +111,6 @@ def winning_algorithm(id):
         
 def draw_algorithm():
     check_numbers = re.compile('[123456789]')
-    print(cell)
     if check_numbers.search(''.join(cell)) == None:
         board()
         print("\n" + code_red + "Game Over! No one won." + code_normal)
@@ -137,7 +135,7 @@ def validate_board_input(cellno):
     if len(cellno) == 0:
         error_msg = null_error_msg
         return False
-    if len(cellno) > 2:
+    if len(cellno) > 1:
         error_msg = digit_error_msg
         return False
     if cellno.isalpha():
